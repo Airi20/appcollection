@@ -1,155 +1,164 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ようこそ（ちょい難）</title>
-<meta name="description" content="ようこそ。こんな辺鄙なサイトを見つけてくれてどうもありがとう。アプリたちはちょっとした謎を解くと見えるよ。" />
-<style>
-:root{
-  --bg:#0f1115; --fg:#e5e7eb; --muted:#9aa3b2; --acc:#7c3aed; --card:#151924; --ok:#10b981; --warn:#f59e0b;
-}
-*{box-sizing:border-box}
-html,body{height:100%; margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; background: radial-gradient(1200px 800px at 80% -10%, #1f2440 0%, #0f1115 40%), var(--bg); color:var(--fg);}
-body{display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;}
-.wrap{width:min(900px, 92vw);}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.08); backdrop-filter:saturate(120%) blur(6px); border-radius:18px; padding:28px 24px; box-shadow:0 10px 30px rgba(0,0,0,0.35);}
-h1{font-size: clamp(24px, 6vw, 36px); margin:0 0 10px; letter-spacing:0.02em; color:var(--fg);}
-#lead{line-height:1.8; color:var(--fg); font-size:16px;}
-.accent{color:var(--fg)}
-.blink{display:inline-block; width:10px; margin-left:4px; background:var(--fg); animation:blink 1.2s steps(2,end) infinite; height:1em; transform:translateY(3px)}
-@keyframes blink{50%{opacity:0}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ようこそ（ちょい難）</title>
+  <meta name="description" content="ようこそ。こんな辺鄙なサイトを見つけてくれてどうもありがとう。アプリたちはちょっとした謎を解くと見えるよ。" />
+  <style>
+    :root{
+      --bg: #0f1115; --fg: #e5e7eb; --muted:#9aa3b2; --acc:#7c3aed; --card:#151924; --ok:#10b981; --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, #1f2440 0%, #0f1115 40%), var(--bg);
+      color:var(--fg);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .wrap{width:min(900px, 92vw);}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:saturate(120%) blur(6px);
+      border-radius:18px; padding:28px 24px; box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    }
+    h1{font-size: clamp(24px, 4vw, 36px); margin:0 0 10px; letter-spacing:0.02em}
+    p{line-height:1.9; color:var(--muted); margin:0.4rem 0}
+    .accent{color:var(--fg)}
+    .blink{display:inline-block; width:10px; margin-left:4px; background:var(--fg); animation:blink 1.2s steps(2,end) infinite; height:1em; transform:translateY(3px)}
+    @keyframes blink{50%{opacity:0}}
 
-.ctaRow{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:12px}
-button, .ghost{
-  border-radius:12px; border:1px solid rgba(255,255,255,0.14);
-  background:#161a25; color:var(--fg); padding:8px 12px; cursor:pointer; font-weight:600;
-  transition:.2s ease; text-decoration:none; display:inline-flex; gap:8px; align-items:center
-}
-button:hover, .ghost:hover{transform:translateY(-1px); border-color:rgba(255,255,255,0.28)}
+    .ctaRow{display:flex; gap:10px; align-items:center; margin-top:12px}
+    button, .ghost{
+      border-radius:12px; border:1px solid rgba(255,255,255,0.14);
+      background:#161a25; color:var(--fg); padding:8px 12px; cursor:pointer; font-weight:600;
+      transition:.2s ease; text-decoration:none; display:inline-flex; gap:8px; align-items:center
+    }
+    button:hover, .ghost:hover{transform:translateY(-1px); border-color:rgba(255,255,255,0.28)}
 
-.hint{font-size:13px; color:#aab3c2; display:none; margin-top:8px}
-.hint.active{display:block}
+    .hint{font-size:13px; color:#aab3c2; display:none; margin-top:8px}
+    .hint.active{display:block}
 
-.apps{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; margin-top:18px; opacity:0; pointer-events:none; transform:translateY(4px); transition:.35s ease;}
-.apps.revealed{opacity:1; pointer-events:auto; transform:none;}
+    .apps{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; margin-top:18px; opacity:0; pointer-events:none; transform:translateY(4px); transition:.35s ease}
+    .apps.revealed{opacity:1; pointer-events:auto; transform:none}
 
-.app{background:var(--card); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:8px; min-height:120px; position:relative; overflow:hidden;}
-.app h3{margin:0; font-size:16px}
-.app p{margin:0; font-size:13px}
-.app button{margin-top:auto;}
+    .app{
+      background:var(--card); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px;
+      display:flex; flex-direction:column; gap:8px; min-height:120px; position:relative; overflow:hidden
+    }
+    .badge{position:absolute; top:10px; right:10px; font-size:11px; color:#c4cbe0; background:rgba(124,58,237,.18); border:1px solid rgba(124,58,237,.35); padding:4px 8px; border-radius:999px}
+    .app h3{margin:0; font-size:16px}
+    .app p{margin:0; font-size:13px}
+    .app a{margin-top:auto; align-self:flex-start; padding:6px 10px; border-radius:10px; border:1px solid rgba(255,255,255,0.14); text-decoration:none; color:var(--fg)}
+    .app a:hover{border-color:#fff3}
 
-.foot{margin-top:12px; font-size:12px; color:#8c95a6}
+    .foot{margin-top:12px; font-size:12px; color:#8c95a6}
 
-.dotbar{display:flex; gap:8px; margin-top:14px; justify-content:center}
-.dot{width:8px; height:8px; border-radius:999px; background:#3b3f52; cursor:crosshair; opacity:.55}
-.dot.hit{background:var(--ok); opacity:1; box-shadow:0 0 0 4px rgba(16,185,129,.15)}
+    .dotbar{display:flex; gap:8px; margin-top:14px}
+    .dot{width:8px; height:8px; border-radius:999px; background:#3b3f52; cursor:crosshair; opacity:.55}
+    .dot.hit{background:var(--ok); opacity:1; box-shadow:0 0 0 4px rgba(16,185,129,.15)}
 
-.hiddenMsg{opacity:.12; font-size:12px; user-select:none}
-.hiddenMsg:hover{opacity:.45}
+    .hiddenMsg{opacity:.12; font-size:12px; user-select:none}
+    .hiddenMsg:hover{opacity:.45}
 
-@media (max-width:480px){ h1{font-size:28px} #lead{font-size:14px} .foot{font-size:11px} }
-</style>
+    @media (max-width:480px){ .foot{font-size:11px} }
+  </style>
 </head>
 <body>
-<main class="wrap">
-<section class="card" aria-live="polite">
-  <h1 id="title"><span class="accent">ようこそ。</span><span class="blink" aria-hidden="true"></span></h1>
-  <p id="lead">こんな辺鄙なサイトを見つけてくれて、どうもありがとう。<br/>
-  作ったアプリたちを見せようと思うんだけど、<strong>簡単に見られちゃ恥ずかしい</strong>から、ちょっと探すのが難しくなるようにしたよ。<br/>
-  <em>見つけられるかな？</em></p>
+  <main class="wrap">
+    <section class="card" aria-live="polite">
+      <h1 id="title"><span class="accent">ようこそ。</span><span class="blink" aria-hidden="true"></span></h1>
+      <p id="lead">こんな辺鄙なサイトを見つけてくれて、どうもありがとう。<br/>
+        作ったアプリたちを見せようと思うんだけど、<strong>簡単に見られちゃ恥ずかしい</strong>から、ちょっと探すのが難しくなるようにしたよ。<br/>
+        <em>見つけられるかな？</em>
+      </p>
 
-  <div class="ctaRow">
-    <button id="hintBtn" aria-expanded="false" aria-controls="hint">ヒント</button>
-    <a class="ghost" id="openBtn" href="#" title="うっかり全部見せる">うっかり全部見せる</a>
-    <span class="hiddenMsg">（ここ、5回くらいタップすると…？）</span>
-  </div>
+      <div class="ctaRow">
+        <button id="hintBtn" aria-expanded="false" aria-controls="hint">ヒント</button>
+        <a class="ghost" id="openBtn" href="#" title="うっかり全部見せる">うっかり全部見せる</a>
+        <span class="hiddenMsg">（ここ、5回くらいタップすると…？）</span>
+      </div>
 
-  <div id="hint" class="hint" role="note">
-    ・タイトルの「ようこそ。」に秘密あり。<br/>
-    ・キーボードで <kbd>A I R I</kbd> とタイプしてみて。<br/>
-    ・どこかにある小さな ● を全部光らせると…。
-  </div>
+      <div id="hint" class="hint" role="note">
+        ・タイトルの「ようこそ。」に秘密あり。<br/>
+        ・キーボードで <kbd>A I R I</kbd> とタイプしてみて。<br/>
+        ・どこかにある小さな ● を全部光らせると…。
+      </div>
 
-  <div class="dotbar" aria-hidden="true">
-    <div class="dot" data-dot="1"></div>
-    <div class="dot" data-dot="2"></div>
-    <div class="dot" data-dot="3"></div>
-  </div>
+      <div class="dotbar" aria-hidden="true">
+        <div class="dot" data-dot="1"></div>
+        <div class="dot" data-dot="2"></div>
+        <div class="dot" data-dot="3"></div>
+      </div>
 
-  <section id="apps" class="apps" aria-hidden="true">
-    <article class="app">
-      <h3>TrussForce</h3>
-      <p>部材力自動計算アプリ（送信に１分くらいかかるよ）。💻 実験でパソコンで結果出てんのに手計算しろって言われたので作ってみた。</p>
-      <button data-url="https://trussfront.onrender.com/">開く</button>
-    </article>
-    <article class="app">
-      <h3>マインスイーパー</h3>
-      <p>Reactで作った爆速マインスイーパー。息抜きにどうぞ。(๑•̀ •́)وｲｲﾈ✧.ﾟ</p>
-      <button data-url="https://mine-sweeper2.vercel.app/">開く</button>
-    </article>
-    <article class="app">
-      <h3>課題に手を付けられない大学生へ</h3>
-      <p>課題？やる気？知らんがな。そんな君に贈る時間操作型アプリ。ｳﾜｰﾝ(ﾉ;ω;)ﾉ</p>
-      <button data-url="https://report-time-hope.vercel.app/">開く</button>
-    </article>
-    <article class="app">
-      <h3>Done Today</h3>
-      <p>今日やったこと、今日できなかったこと、全部記録しとこ(*^^)v。</p>
-      <button data-url="https://done-today-eight.vercel.app/">開く</button>
-    </article>
-    <article class="app">
-      <h3>Code Crush</h3>
-      <p>JavaScript文法を選択式で学べるクイズアプリ。意外とガチ。( ･´ｰ･｀)</p>
-      <button data-url="https://code-crush-black.vercel.app/">開く</button>
-    </article>
-    <!-- ほかのアプリも同様に追加 -->
-  </section>
+      <section id="apps" class="apps" aria-hidden="true">
+        <article class="app"><span class="badge">Web</span><h3>TrussForce</h3><p>部材力自動計算アプリ（送信に１分くらいかかるよ）。💻 実験でパソコンで結果出てんのに手計算しろって言われたので作ってみた。</p><a href="https://trussfront.onrender.com/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>マインスイーパー</h3><p>Reactで作った爆速マインスイーパー。息抜きにどうぞ。(๑•̀ •́)وｲｲﾈ✧.ﾟ</p><a href="https://mine-sweeper2.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">App</span><h3>課題に手を付けられない大学生へ</h3><p>課題？やる気？知らんがな。そんな君に贈る時間操作型アプリ。ｳﾜｰﾝ(ﾉ;ω;)ﾉ</p><a href="https://report-time-hope.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">App</span><h3>Done Today</h3><p>今日やったこと、今日できなかったこと、全部記録しとこ(*^^)v。</p><a href="https://done-today-eight.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Quiz</span><h3>Code Crush</h3><p>JavaScript文法を選択式で学べるクイズアプリ。意外とガチ。( ･´ｰ･｀)</p><a href="https://code-crush-black.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">App</span><h3>５秒ルール練習用アプリ</h3><p>本当の５秒を知ろう。作ってから３秒ルールじゃね？って思ったけど気にしないことにした。</p><a href="https://5seconds-ueqx.vercel.app" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>つなげて１２</h3><p>縦、横、斜めに指をスライドさせて、足して１２になるようにするゲームです。</p><a href="https://20-lake.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>ジャンプして障害物をよけるゲーム</h3><p>BGMはスタワンでカバーしました。</p><a href="https://dinosaur4.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Concept</span><h3>HumanOS 起動中...</h3><p>コンピューターでも、起動遅いときがある。</p><a href="https://emotional-support-kappa.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Art</span><h3>npm恋愛バグ</h3><p>「貴方解剖純愛歌死ね」のLINE MVから着想を得て、恋愛こじらせまくった人の心情をコマンドプロンプト風に表現してみた。</p><a href="https://error-love.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>弾をよけるゲーム</h3><p>クリア時間競えるよ。&lt;&gt;で移動、スペースで攻撃。パソコンじゃないとできない。</p><a href="https://git-main-airi20s-projects.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>数独</h3><p>うｐ主の愚痴コメント付き。</p><a href="https://sudoku-one-smoky.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>オセロ</h3><p>黄色いところをクリックするだけっていう。</p><a href="https://othello-six.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+        <article class="app"><span class="badge">Game</span><h3>ナイチンゲールの配信ゲーム</h3><p>ブロックを回転させて横一列そろえたら消える。天井着いたらゲームオーバー。</p><a href="https://nightingale-s-streaming-game.vercel.app/" target="_blank" rel="noopener">開く</a></article>
+      </section>
 
-  <p class="foot">※ URLに <code>?open=1</code> を付けると即オープン（作者用ショートカット）。</p>
-</section>
-</main>
+      <p class="foot">※ URLに <code>?open=1</code> を付けると即オープン（作者用ショートカット）。</p>
+    </section>
+  </main>
 
-<script>
-const title = document.getElementById('title');
-const hintBtn = document.getElementById('hintBtn');
-const hint = document.getElementById('hint');
-const openBtn = document.getElementById('openBtn');
-const apps = document.getElementById('apps');
-const dots = document.querySelectorAll('.dot');
-let revealed = false;
+  <script>
+    const title = document.getElementById('title');
+    const hintBtn = document.getElementById('hintBtn');
+    const hint = document.getElementById('hint');
+    hintBtn.addEventListener('click', ()=>{
+      const on = hint.classList.toggle('active');
+      hintBtn.setAttribute('aria-expanded', on);
+    });
 
-hintBtn.addEventListener('click', ()=>{
-  const expanded = hintBtn.getAttribute('aria-expanded') === 'true';
-  hintBtn.setAttribute('aria-expanded', !expanded);
-  hint.classList.toggle('active');
-});
-
-// うっかり全部開く
-openBtn.addEventListener('click', e=>{
-  e.preventDefault();
-  apps.classList.add('revealed');
-  apps.setAttribute('aria-hidden','false');
-});
-
-// ドットで反応
-dots.forEach(d=>{
-  d.addEventListener('click', ()=>{
-    d.classList.toggle('hit');
-    if([...dots].every(dot=>dot.classList.contains('hit'))){
+    const apps = document.getElementById('apps');
+    const openBtn = document.getElementById('openBtn');
+    let unlocked = false;
+    function reveal(){
+      if(unlocked) return;
+      unlocked = true;
       apps.classList.add('revealed');
       apps.setAttribute('aria-hidden','false');
     }
-  });
-});
 
-// ボタンでリンク開く
-document.querySelectorAll('#apps button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const url = btn.dataset.url;
-    window.open(url,'_blank');
-  });
-});
-</script>
+    let clickCount = 0;
+    title.addEventListener('click', ()=>{
+      clickCount++;
+      if(clickCount >= 5) reveal();
+    });
+
+    const target = 'airi';
+    let buffer = '';
+    window.addEventListener('keydown', (e)=>{
+      if(unlocked) return;
+      if(e.key.length === 1){
+        buffer = (buffer + e.key.toLowerCase()).slice(-target.length);
+        if(buffer === target){ reveal(); }
+      }
+    });
+
+    const dots = Array.from(document.querySelectorAll('.dot'));
+    dots.forEach(d=> d.addEventListener('click', ()=>{
+      d.classList.add('hit');
+      if(dots.every(x=>x.classList.contains('hit'))){ reveal(); }
+    }));
+
+    openBtn.addEventListener('click', (e)=>{ e.preventDefault(); reveal(); });
+
+    const params = new URLSearchParams(location.search);
+    if(params.get('open')==='1') reveal();
+  </script>
 </body>
 </html>
